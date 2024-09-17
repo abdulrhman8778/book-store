@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        header nav ul li {
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #book-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .book {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+
+        #cart {
+            margin-top: 40px;
+        }
+
+        #cart-items {
+            list-style-type: none;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Online Bookstore</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Books</a></li>
+                <li><a href="#">Cart</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="book-list">
+            <h2>Available Books</h2>
+            <div class="book" id="book1">
+                <h3>Book Title 1</h3>
+                <p>Author: John Doe</p>
+                <p>Price: $10</p>
+                <button onclick="addToCart('Book Title 1', 10)">Add to Cart</button>
+            </div>
+            <div class="book" id="book2">
+                <h3>Book Title 2</h3>
+                <p>Author: Jane Doe</p>
+                <p>Price: $15</p>
+                <button onclick="addToCart('Book Title 2', 15)">Add to Cart</button>
+            </div>
+            <!-- Add more books as needed -->
+        </section>
+
+        <section id="cart">
+            <h2>Your Cart</h2>
+            <ul id="cart-items">
+                <!-- Cart items will appear here -->
+            </ul>
+            <p>Total: $<span id="total">0</span></p>
+            <button onclick="checkout()">Checkout</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Online Bookstore</p>
+    </footer>
+
+    <script>
+        let cart = [];
+        let totalPrice = 0;
+
+        function addToCart(bookTitle, price) {
+            cart.push({ title: bookTitle, price: price });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const total = document.getElementById('total');
+
+            cartItems.innerHTML = '';
+            totalPrice = 0;
+
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.title} - $${item.price}`;
+                cartItems.appendChild(li);
+                totalPrice += item.price;
+            });
+
+            total.textContent = totalPrice;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+            } else {
+                alert(`Thank you for your purchase! Total amount: $${totalPrice}`);
+                cart = [];
+                updateCart();
+            }
+        }
+    </script>
+</body>
+</html>
